@@ -11,6 +11,6 @@ spec:
     path: .
   destination:
     server: https://kubernetes.default.svc
-    namespace: ks-versions
+    namespace: ks-version
   syncPolicy:
     automated: {}
