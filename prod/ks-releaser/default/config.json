@@ -1,0 +1,8 @@
+{
+    "app": {
+        "name": "ks-releaser",
+        "namespace": "ks-releaser-system",
+        "path": "prod/ks-releaser/default",
+        "clusterName": "in-cluster"
+    }
+}

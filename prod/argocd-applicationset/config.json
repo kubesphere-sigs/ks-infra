@@ -1,0 +1,8 @@
+{
+    "app": {
+        "name": "argocd-applicationset",
+        "namespace": "argocd",
+        "path": "prod/argocd-applicationset/namespace-install",
+        "clusterName": "in-cluster"
+    }
+}

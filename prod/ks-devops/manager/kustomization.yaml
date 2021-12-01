@@ -1,0 +1,10 @@
+resources:
+- manager.yaml
+
+images:
+- name: ghcr.io/kubesphere/devops-tools
+  newName: ghcr.io/kubesphere/devops-tools
+  newTag: v3.2.0
+- name: ghcr.io/kubesphere/devops-controller
+  newName: ghcr.io/kubesphere/devops-controller
+  newTag: v3.2.0

@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ks-devops-appset
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/kubesphere-sigs/ks-infra
+      revision: HEAD
+      files:
+      - path: prod/ks-releaser/default/config.json
+      - path: prod/argocd/config.json
+      - path: prod/argocd-applicationset/config.json
+      - path: prod/ks-releaser-apps/config.json
+      - path: int/ks-releaser/config.json
+  template:
+    metadata:
+      name: '{{app.name}}'
+    spec:
+      project: "default"
+      syncPolicy:
+        automated: {}
+      source:
+        repoURL: https://github.com/kubesphere-sigs/ks-infra
+        targetRevision: HEAD
+        path: '{{app.path}}'
+      destination:
+        name: '{{app.clusterName}}'
+        namespace: '{{app.namespace}}'

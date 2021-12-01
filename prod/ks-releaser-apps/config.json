@@ -1,0 +1,8 @@
+{
+    "app": {
+        "name": "ks-releaser-apps",
+        "namespace": "ks-releaser-apps",
+        "path": "prod/ks-releaser-apps/core",
+        "clusterName": "in-cluster"
+    }
+}

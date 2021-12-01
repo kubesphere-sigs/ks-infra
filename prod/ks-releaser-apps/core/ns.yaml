@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ks-releaser-apps
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: linuxsuren
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jenkins-zh
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ks-versions
