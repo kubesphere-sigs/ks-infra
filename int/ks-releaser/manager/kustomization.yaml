@@ -8,7 +8,7 @@ resources:
 images:
 - name: ghcr.io/kubesphere-sigs/ks-releaser
   newName: ghcr.io/kubesphere-sigs/ks-releaser
-  newTag: v0.0.13
+  newTag: v0.0.14
 
 generatorOptions:
   disableNameSuffixHash: true
