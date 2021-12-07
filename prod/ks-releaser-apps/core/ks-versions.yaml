@@ -13,4 +13,5 @@ spec:
     server: https://kubernetes.default.svc
     namespace: ks-version
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
