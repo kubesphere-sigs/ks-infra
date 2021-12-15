@@ -1,0 +1,8 @@
+{
+    "app": {
+        "name": "tekton",
+        "namespace": "tekton-pipelines",
+        "path": "int/tekton",
+        "clusterName": "int"
+    }
+}
