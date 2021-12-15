@@ -1847,7 +1847,7 @@ spec:
             - name: METRICS_DOMAIN
               value: tekton.dev/pipeline
             - name: KUBERNETES_MIN_VERSION
-              value: 1.19
+              value: "1.19.0"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -2075,7 +2075,7 @@ spec:
             - name: METRICS_DOMAIN
               value: tekton.dev/pipeline
             - name: KUBERNETES_MIN_VERSION
-              value: 1.19
+              value: "1.19.0"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
