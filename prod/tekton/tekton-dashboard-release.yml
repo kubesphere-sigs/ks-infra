@@ -300,6 +300,7 @@ metadata:
   name: tekton-dashboard
   namespace: tekton-pipelines
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 9097
@@ -350,7 +351,7 @@ spec:
             - --logout-url=
             - --pipelines-namespace=tekton-pipelines
             - --triggers-namespace=tekton-pipelines
-            - --read-only=false
+            - --read-only=true
             - --log-level=info
             - --log-format=json
             - --namespace=
