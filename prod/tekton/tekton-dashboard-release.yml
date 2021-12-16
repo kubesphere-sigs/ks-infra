@@ -354,7 +354,7 @@ spec:
             - --read-only=true
             - --log-level=info
             - --log-format=json
-            - --namespace=
+            - --namespace=ks-devops-ext
             - --stream-logs=true
             - --external-logs=
           env:
