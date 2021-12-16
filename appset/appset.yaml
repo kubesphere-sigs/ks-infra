@@ -14,6 +14,7 @@ spec:
       - path: prod/argocd-applicationset/config.json
       - path: prod/ks-releaser-apps/config.json
       - path: prod/tekton/config/config.json
+      - path: prod/tekton-pipelines/config/config.json
       - path: int/ks-releaser/config.json
       - path: int/tekton/config/config.json
   template:
