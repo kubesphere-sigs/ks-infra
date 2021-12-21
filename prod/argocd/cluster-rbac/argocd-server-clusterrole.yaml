@@ -16,6 +16,7 @@ rules:
   - get     # supports viewing live object manifest in UI
   - patch   # supports `argocd app patch`
   - list
+  - watch
 - apiGroups:
   - ""
   resources:
