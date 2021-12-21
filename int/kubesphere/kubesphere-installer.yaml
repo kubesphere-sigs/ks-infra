@@ -274,7 +274,7 @@ metadata:
   namespace: kubesphere-system
   labels:
     app: ks-install
-    version: v3.2.1
+    version: v3.2.0
   annotations:
     deployment.kubernetes.io/revision: '1'
 spec:
@@ -282,13 +282,13 @@ spec:
   selector:
     matchLabels:
       app: ks-install
-      version: v3.2.1
+      version: v3.2.0
   template:
     metadata:
       creationTimestamp: null
       labels:
         app: ks-install
-        version: v3.2.1
+        version: v3.2.0
     spec:
       volumes:
         - name: host-time
