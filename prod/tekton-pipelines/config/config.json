@@ -1,6 +1,6 @@
 {
     "app": {
-        "name": "ks-cli-pipelines-apps",
+        "name": "ks-pipelines-apps",
         "namespace": "ks-devops-ext",
         "path": "prod/tekton-pipelines",
         "clusterName": "in-cluster"
