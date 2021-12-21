@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "common-tekton-manifests-int",
+    "namespace": "ks-devops-ext",
+    "path": "int/ks-devops-ext-tekton-common",
+    "clusterName": "int"
+  }
+}
