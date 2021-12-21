@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: trigger-listener
+  namespace: ks-devops-ext
+spec:
+  serviceAccountName: trigger-bot
+  triggers:
+    - triggerRef: ks-pull-request
+    - triggerRef: ks-releaser-pull-request

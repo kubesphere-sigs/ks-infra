@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: ks-devops-ext
+    kubesphere.io/namespace: ks-devops-ext
+    # Assign this namespace to the `ks-devops-ext` Workspace.
+    kubesphere.io/workspace: ks-devops-ext
+  name: ks-devops-ext

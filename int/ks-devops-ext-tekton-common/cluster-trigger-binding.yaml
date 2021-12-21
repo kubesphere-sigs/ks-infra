@@ -1,0 +1,16 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: ClusterTriggerBinding
+metadata:
+  name: pipeline-clusterbinding
+spec:
+  params:
+    - name: repo-full-name
+      value: $(body.repository.full_name)
+    - name: revision
+      value: $(body.pull_request.head.sha)
+    - name: clone-url
+      value: $(body.repository.clone_url)
+    - name: pull-request-number
+      value: $(body.pull_request.number)
+    - name: dashboard-url
+      value: http://103.61.38.146:30282/#/namespaces/ks-devops-ext/pipelineruns
