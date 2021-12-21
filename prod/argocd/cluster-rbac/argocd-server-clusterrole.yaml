@@ -19,6 +19,8 @@ rules:
   - ""
   resources:
   - events
+  - configmaps
+  - secrets
   verbs:
   - list    # supports listing events in UI
 - apiGroups:
