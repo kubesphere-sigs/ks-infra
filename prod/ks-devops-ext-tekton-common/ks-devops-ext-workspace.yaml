@@ -1,0 +1,6 @@
+apiVersion: tenant.kubesphere.io/v1alpha1
+kind: Workspace
+metadata:
+  name: ks-devops-ext
+spec:
+  manager: admin
