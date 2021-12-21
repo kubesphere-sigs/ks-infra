@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ks-releaser-pipelines
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kubesphere-sigs/ks-releaser
+    targetRevision: HEAD
+    path: .github/tekton
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ks-devops-ext
+  syncPolicy:
+    automated: {}
