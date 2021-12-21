@@ -17,6 +17,7 @@ spec:
       - path: prod/tekton-pipelines/config/config.json
       - path: int/ks-releaser/config.json
       - path: int/tekton/config/config.json
+      - path: int/kubesphere/config/config.json
   template:
     metadata:
       name: '{{app.name}}'
