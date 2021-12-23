@@ -1,0 +1,8 @@
+{
+    "app": {
+        "name": "kubesphere",
+        "namespace": "kubesphere-system",
+        "path": "prod/kubesphere",
+        "clusterName": "in-cluster"
+    }
+}
