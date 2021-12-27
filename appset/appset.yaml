@@ -9,6 +9,7 @@ spec:
       repoURL: https://github.com/kubesphere-sigs/ks-infra
       revision: HEAD
       files:
+      - path: prod/kubesphere/config/config.json
       - path: prod/ks-releaser/default/config.json
       - path: prod/argocd/config.json
       - path: prod/argocd-applicationset/config.json
