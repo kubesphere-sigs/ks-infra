@@ -21,6 +21,7 @@ spec:
       - path: int/tekton/config/config.json
       - path: int/ks-devops-ext-tekton-common/config/config.json
       - path: int/kubesphere/config/config.json
+      - path: int/demo-osf2f/config.json
   template:
     metadata:
       name: '{{app.name}}'

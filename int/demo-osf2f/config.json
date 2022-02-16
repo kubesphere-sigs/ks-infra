@@ -1,0 +1,8 @@
+{
+    "app": {
+        "name": "demo-osf2f",
+        "namespace": "ks-releaser-apps",
+        "path": "int/demo-osf2f/core",
+        "clusterName": "int"
+    }
+}
