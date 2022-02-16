@@ -1,0 +1,11 @@
+apiVersion: osf2f.my.domain/v1alpha1
+kind: RSS
+metadata:
+  name: chaoss
+  namespace: default
+spec:
+  address: http://www.ximalaya.com/album/54433824.xml
+  description: 分享与开源社区，指标和度量的用户故事
+  image: https://fdfs.xmcdn.com/storages/6206-audiofreehighqps/36/7F/GKwRIW4FkFntAALK8gEDEide.jpeg
+  link: http://www.ximalaya.com
+  title: CHAOSScast China
