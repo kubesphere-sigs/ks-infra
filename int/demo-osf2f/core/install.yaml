@@ -672,7 +672,12 @@ spec:
         app: osf2f-ui
     spec:
       containers:
-      - image: ghcr.io/linuxsuren/open-podcasts-ui:master
+      - args:
+        - --defaultNamespace=default
+        command:
+        - node
+        - index.js
+        image: ghcr.io/linuxsuren/open-podcasts-ui:master
         imagePullPolicy: Always
         name: osf2f-ui
         resources: {}
