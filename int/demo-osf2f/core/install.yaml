@@ -618,7 +618,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: ghcr.io/linuxsuren/open-podcasts:master
+        image: ghcr.io/opensource-f2f/open-podcasts:master
         livenessProbe:
           httpGet:
             path: /healthz
@@ -677,7 +677,7 @@ spec:
         command:
         - node
         - index.js
-        image: ghcr.io/linuxsuren/open-podcasts-ui:master
+        image: ghcr.io/opensource-f2f/open-podcasts-ui:master
         imagePullPolicy: Always
         name: osf2f-ui
         resources: {}
