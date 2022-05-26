@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: osf2f-ui
+  name: osf2f-osf2f-ui
+  namespace: osf2f-system
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: osf2f-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: osf2f-ui
+    spec:
+      containers:
+      - args:
+        - --defaultNamespace=default
+        command:
+        - node
+        - index.js
+        image: ghcr.io/opensource-f2f/open-podcasts-ui:v0.0.8
+        imagePullPolicy: Always
+        name: osf2f-ui
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: osf2f-controller-manager
+      serviceAccountName: osf2f-controller-manager
+      terminationGracePeriodSeconds: 30
