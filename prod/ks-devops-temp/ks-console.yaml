@@ -1,0 +1,121 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ks-console
+  namespace: kubesphere-system
+  labels:
+    app: ks-console
+    app.kubernetes.io/managed-by: Helm
+    tier: frontend
+    version: v3.1.0
+  annotations:
+    deployment.kubernetes.io/revision: '5'
+    meta.helm.sh/release-name: ks-core
+    meta.helm.sh/release-namespace: kubesphere-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ks-console
+      tier: frontend
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ks-console
+        tier: frontend
+    spec:
+      volumes:
+        - name: ks-console-config
+          configMap:
+            name: ks-console-config
+            items:
+              - key: local_config.yaml
+                path: local_config.yaml
+            defaultMode: 420
+        - name: sample-bookinfo
+          configMap:
+            name: sample-bookinfo
+            defaultMode: 420
+        - name: host-time
+          hostPath:
+            path: /etc/localtime
+            type: ''
+      containers:
+        - name: ks-console
+          image: 'kubespheredev/ks-console:nightly-20220725'
+          resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: ks-console-config
+              mountPath: /opt/kubesphere/console/server/local_config.yaml
+              subPath: local_config.yaml
+            - name: sample-bookinfo
+              mountPath: /opt/kubesphere/console/server/sample
+            - name: host-time
+              readOnly: true
+              mountPath: /etc/localtime
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 8
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: kubesphere
+      serviceAccount: kubesphere
+      securityContext: {}
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/master
+                    operator: In
+                    values:
+                      - ''
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - ks-console
+              namespaces:
+                - kubesphere-system
+              topologyKey: kubernetes.io/hostname
+      schedulerName: default-scheduler
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 0
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

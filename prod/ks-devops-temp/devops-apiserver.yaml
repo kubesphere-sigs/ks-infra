@@ -1,0 +1,91 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: devops-apiserver
+  namespace: kubesphere-devops-system
+  labels:
+    app.kubernetes.io/instance: devops
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ks-devops
+    app.kubernetes.io/version: v3.2.1
+    devops.kubesphere.io/component: apiserver
+    helm.sh/chart: ks-devops-0.1.9
+  annotations:
+    deployment.kubernetes.io/revision: '4'
+    meta.helm.sh/release-name: devops
+    meta.helm.sh/release-namespace: kubesphere-devops-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: devops
+      app.kubernetes.io/name: ks-devops
+      devops.kubesphere.io/component: apiserver
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/instance: devops
+        app.kubernetes.io/name: ks-devops
+        devops.kubesphere.io/component: apiserver
+    spec:
+      volumes:
+        - name: kubesphere-config
+          configMap:
+            name: devops-config
+            defaultMode: 420
+      initContainers:
+        - name: migrate-config
+          image: 'kubesphere/devops-tools:v3.3.0'
+          command:
+            - ks
+            - option
+            - migrate
+            - '--service'
+            - 'devops-apiserver.kubesphere-devops-system:9090'
+            - '--namespace'
+            - kubesphere-devops-system
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+        - name: init-config
+          image: 'kubesphere/devops-tools:v3.2.1'
+          command:
+            - /jwt
+            - '--output'
+            - configmap
+            - '--namespace'
+            - kubesphere-devops-system
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      containers:
+        - name: ks-devops
+          image: 'ghcr.io/kubesphere/devops-apiserver:nightly-20220725'
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: kubesphere-config
+              mountPath: /etc/kubesphere/
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          securityContext: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: devops
+      serviceAccount: devops
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
