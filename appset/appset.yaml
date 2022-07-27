@@ -14,8 +14,8 @@ spec:
       - path: prod/argocd/config.json
       - path: prod/argocd-applicationset/config.json
       - path: prod/ks-releaser-apps/config.json
-      - path: prod/tekton/config/config.json
-      - path: prod/tekton-pipelines/config/config.json
+      # - path: prod/tekton/config/config.json
+      # - path: prod/tekton-pipelines/config/config.json
       - path: prod/ks-devops-ext-tekton-common/config/config.json
       - path: int/ks-releaser/config.json
       - path: int/tekton/config/config.json
@@ -28,7 +28,8 @@ spec:
     spec:
       project: "default"
       syncPolicy:
-        automated: {}
+        automated:
+          prune: true
       source:
         repoURL: https://github.com/kubesphere-sigs/ks-infra
         targetRevision: HEAD
