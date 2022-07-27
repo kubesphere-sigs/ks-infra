@@ -64,6 +64,8 @@ spec:
       containers:
         - name: ks-devops
           image: 'ghcr.io/kubesphere/devops-apiserver:nightly-20220725'
+          args:
+          - --argocd-namespace=argocd
           ports:
             - containerPort: 9090
               protocol: TCP

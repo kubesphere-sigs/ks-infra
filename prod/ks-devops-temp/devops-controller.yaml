@@ -48,6 +48,10 @@ spec:
       containers:
         - name: ks-devops
           image: 'ghcr.io/kubesphere/devops-controller:nightly-20220725'
+          args:
+          - --enabled-controllers
+          - argocd=true
+          - --argocd-namespace=argocd
           resources: {}
           volumeMounts:
             - name: kubesphere-config
