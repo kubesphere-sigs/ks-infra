@@ -297,7 +297,7 @@ spec:
             type: ''
       containers:
         - name: installer
-          image: 'registry.cn-beijing.aliyuncs.com/kubesphereio/ks-installer:v3.2.1'
+          image: 'registry.cn-beijing.aliyuncs.com/kubesphereio/ks-installer:v3.3.0'
           volumeMounts:
             - name: host-time
               mountPath: /etc/localtime
