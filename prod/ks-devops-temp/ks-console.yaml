@@ -43,7 +43,7 @@ spec:
             type: ''
       containers:
         - name: ks-console
-          image: 'kubespheredev/ks-console:nightly-20220725'
+          image: 'kubespheredev/ks-console:nightly-20220728'
           resources:
             limits:
               cpu: '1'
