@@ -278,7 +278,7 @@ metadata:
   annotations:
     deployment.kubernetes.io/revision: '1'
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: ks-install
