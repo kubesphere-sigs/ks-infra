@@ -52,6 +52,7 @@ spec:
           - --enabled-controllers
           - argocd=true
           - --argocd-namespace=argocd
+          - --external-address=http://103.61.37.25:30880/
           resources: {}
           volumeMounts:
             - name: kubesphere-config
