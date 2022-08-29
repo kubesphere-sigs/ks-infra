@@ -43,7 +43,7 @@ spec:
             type: ''
       containers:
         - name: ks-console
-          image: 'kubespheredev/ks-console:nightly-20220825'
+          image: 'kubespheredev/ks-console:nightly-20220828'
           resources:
             limits:
               cpu: '1'
@@ -70,7 +70,7 @@ spec:
             failureThreshold: 8
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
