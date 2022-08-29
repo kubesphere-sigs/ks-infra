@@ -47,12 +47,13 @@ spec:
           imagePullPolicy: Always
       containers:
         - name: ks-devops
-          image: 'ghcr.io/kubesphere-sigs/devops-controller:nightly-20220828'
+          image: 'kubespheredev/devops-controller:dev-v3.3.1-rc.1-2e450a5'
           args:
           - --enabled-controllers
           - argocd=true
           - --argocd-namespace=argocd
           - --external-address=http://103.61.37.25:30880/
+          - --cluster-name=host
           resources: {}
           volumeMounts:
             - name: kubesphere-config
