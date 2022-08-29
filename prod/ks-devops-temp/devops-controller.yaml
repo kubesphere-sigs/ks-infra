@@ -54,6 +54,7 @@ spec:
           - --argocd-namespace=argocd
           - --external-address=http://103.61.37.25:30880/
           - --cluster-name=host
+          - --leader-elect=true
           resources: {}
           volumeMounts:
             - name: kubesphere-config
