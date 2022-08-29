@@ -47,7 +47,7 @@ spec:
           imagePullPolicy: Always
       containers:
         - name: ks-devops
-          image: 'ghcr.io/kubesphere-sigs/devops-controller:nightly-20220825'
+          image: 'ghcr.io/kubesphere-sigs/devops-controller:nightly-20220828'
           args:
           - --enabled-controllers
           - argocd=true
@@ -58,7 +58,7 @@ spec:
               mountPath: /etc/kubesphere/
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           securityContext: {}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
