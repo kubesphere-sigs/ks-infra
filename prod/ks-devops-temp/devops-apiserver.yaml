@@ -63,7 +63,7 @@ spec:
           imagePullPolicy: Always
       containers:
         - name: ks-devops
-          image: 'kubespheredev/devops-apiserver:dev-v3.3.1-rc.1-19793e4'
+          image: 'kubespheredev/devops-apiserver:dev-v3.3.1-rc.1-f27cfe1'
           args:
           - --argocd-namespace=argocd
           ports:
