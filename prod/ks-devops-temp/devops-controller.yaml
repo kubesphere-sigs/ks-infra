@@ -47,7 +47,7 @@ spec:
           imagePullPolicy: Always
       containers:
         - name: ks-devops
-          image: 'kubespheredev/devops-controller:dev-v3.3.1-rc.1-d7e61aa'
+          image: 'kubespheredev/devops-controller:dev-v3.3.1-rc.1-a0aa5cd'
           args:
           - --enabled-controllers
           - argocd=true
