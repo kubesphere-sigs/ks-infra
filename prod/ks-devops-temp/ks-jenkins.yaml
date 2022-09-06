@@ -80,7 +80,7 @@ spec:
           imagePullPolicy: Always
       containers:
         - name: devops-jenkins
-          image: 'kubesphere/ks-jenkins:v3.3.0-2.319.1'
+          image: 'ghcr.io/kubesphere/ks-jenkins:vmaster@sha256:b6882379cc756beac998126abda91f00e92fe4a1574f5b9b9ef6ac3124617b2a'
           args:
             - '--argumentsRealm.passwd.$(ADMIN_USER)=$(ADMIN_PASSWORD)'
             - '--argumentsRealm.roles.$(ADMIN_USER)=admin'
