@@ -1,0 +1,198 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: devops-jenkins
+  namespace: kubesphere-devops-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    chart: jenkins-0.19.3
+    component: devops-jenkins-master
+    heritage: Helm
+    release: devops
+  annotations:
+    deployment.kubernetes.io/revision: '5'
+    meta.helm.sh/release-name: devops
+    meta.helm.sh/release-namespace: kubesphere-devops-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: devops-jenkins-master
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: devops-jenkins
+        chart: jenkins-0.19.3
+        component: devops-jenkins-master
+        heritage: Helm
+        release: devops
+      annotations:
+        checksum/config: be5c33be923a1201e22615d80894af4e2c9f8023ccc1d99d1b6a771176c0991a
+    spec:
+      volumes:
+        - name: casc-config
+          configMap:
+            name: jenkins-casc-config
+            defaultMode: 420
+        - name: jenkins-config
+          configMap:
+            name: devops-jenkins
+            defaultMode: 420
+        - name: secrets-dir
+          emptyDir: {}
+        - name: jenkins-home
+          persistentVolumeClaim:
+            claimName: devops-jenkins
+      initContainers:
+        - name: copy-default-config
+          image: 'ghcr.io/kubesphere/ks-jenkins:vmaster@sha256:b6882379cc756beac998126abda91f00e92fe4a1574f5b9b9ef6ac3124617b2a'
+          command:
+            - sh
+            - /var/jenkins_config/apply_config.sh
+          env:
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: devops-jenkins
+                  key: jenkins-admin-password
+            - name: ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: devops-jenkins
+                  key: jenkins-admin-user
+          resources:
+            limits:
+              cpu: '1'
+              memory: 2Gi
+            requests:
+              cpu: 100m
+              memory: 1500Mi
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+            - name: jenkins-config
+              mountPath: /var/jenkins_config
+            - name: secrets-dir
+              mountPath: /usr/share/jenkins/ref/secrets/
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      containers:
+        - name: devops-jenkins
+          image: 'kubesphere/ks-jenkins:v3.3.0-2.319.1'
+          args:
+            - '--argumentsRealm.passwd.$(ADMIN_USER)=$(ADMIN_PASSWORD)'
+            - '--argumentsRealm.roles.$(ADMIN_USER)=admin'
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: slavelistener
+              containerPort: 50000
+              protocol: TCP
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: >-
+                -XX:MaxRAMPercentage=80 -XX:MinRAMPercentage=60
+                -Dhudson.slaves.NodeProvisioner.initialDelay=20
+                -Dhudson.slaves.NodeProvisioner.MARGIN=50
+                -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85
+                -Dhudson.model.LoadStatistics.clock=5000
+                -Dhudson.model.LoadStatistics.decay=0.2
+                -Dhudson.slaves.NodeProvisioner.recurrencePeriod=5000
+                -Dhudson.security.csrf.DefaultCrumbIssuer.EXCLUDE_SESSION_ID=true
+                -Dio.jenkins.plugins.casc.ConfigurationAsCode.initialDelay=10000
+                -Djenkins.install.runSetupWizard=false -XX:+AlwaysPreTouch
+                -XX:+HeapDumpOnOutOfMemoryError -XX:+UseG1GC
+                -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled
+                -XX:+DisableExplicitGC -XX:+UnlockDiagnosticVMOptions
+                -XX:+UnlockExperimentalVMOptions
+            - name: JENKINS_OPTS
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: devops-jenkins
+                  key: jenkins-admin-password
+            - name: ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: devops-jenkins
+                  key: jenkins-admin-user
+            - name: CASC_JENKINS_CONFIG
+              value: /var/jenkins_home/casc_configs/
+            - name: CASC_MERGE_STRATEGY
+              value: override
+            - name: com.sun.jndi.ldap.connect.timeout
+              value: '15000'
+            - name: com.sun.jndi.ldap.read.timeout
+              value: '60000'
+            - name: kubernetes.connection.timeout
+              value: '60000'
+            - name: kubernetes.request.timeout
+              value: '60000'
+            - name: EMAIL_SMTP_HOST
+              value: mail.example.com
+            - name: EMAIL_SMTP_PORT
+              value: '465'
+            - name: EMAIL_USE_SSL
+              value: 'false'
+            - name: EMAIL_FROM_NAME
+              value: KubeSphere
+            - name: EMAIL_FROM_ADDR
+              value: admin@example.com
+            - name: EMAIL_FROM_PASS
+              value: P@ssw0rd
+          resources:
+            limits:
+              cpu: '2'
+              memory: 4Gi
+            requests:
+              cpu: 100m
+              memory: 1500Mi
+          volumeMounts:
+            - name: casc-config
+              readOnly: true
+              mountPath: /var/jenkins_home/casc_configs
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+            - name: jenkins-config
+              readOnly: true
+              mountPath: /var/jenkins_config
+            - name: secrets-dir
+              mountPath: /usr/share/jenkins/ref/secrets/
+          livenessProbe:
+            httpGet:
+              path: /login
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 90
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 12
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 60
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: devops-jenkins
+      serviceAccount: devops-jenkins
+      securityContext:
+        runAsUser: 0
+      schedulerName: default-scheduler
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
