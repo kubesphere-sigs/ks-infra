@@ -47,7 +47,7 @@ spec:
           imagePullPolicy: Always
       containers:
         - name: ks-devops
-          image: 'ghcr.io/kubesphere-sigs/devops-controller:pr-818@sha256:591785b5b9a7ef794971f90b006e7453de6304b9e135a712b17fba57ef5e9521'
+          image: 'ghcr.io/kubesphere-sigs/devops-controller:nightly-20220912'
           args:
           - --enabled-controllers
           - argocd=true
